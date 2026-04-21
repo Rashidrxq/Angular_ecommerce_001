@@ -1,5 +1,8 @@
 # MyEcommerceStore
 
+
+https://angular-ecommerce-001.vercel.app/ previewlink
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
 
 ## Development server
