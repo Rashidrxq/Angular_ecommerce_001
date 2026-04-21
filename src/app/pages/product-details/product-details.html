@@ -1,0 +1,110 @@
+<main class="page-wrapper detail-page">
+  <div class="container">
+    @if (product) {
+      <nav class="breadcrumb">
+        <a routerLink="/">Home</a> / 
+        <a routerLink="/products">Products</a> / 
+        <span>{{ product.name }}</span>
+      </nav>
+
+      <div class="product-detail-grid">
+        <!-- Image Gallery -->
+        <div class="gallery-column">
+          <div class="main-image-box">
+             @if (product.badge) {
+               <span [class]="getBadgeClass(product.badge)">{{ product.badge }}</span>
+             }
+             <img [src]="product.image" [alt]="product.name" class="main-image">
+          </div>
+          <div class="image-previews">
+              <div class="preview active"><img [src]="product.image"></div>
+              <div class="preview"><img [src]="product.image" style="filter: hue-rotate(90deg)"></div>
+              <div class="preview"><img [src]="product.image" style="filter: hue-rotate(180deg)"></div>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="info-column">
+          <h1 class="product-title">{{ product.name }}</h1>
+          
+          <div class="product-meta">
+            <div class="rating-box">
+              <div class="stars">
+                @for (star of getStars(product.rating); track $index) {
+                  @if (star === 'full') { <span class="star-full">⭐</span> }
+                  @else if (star === 'half') { <span class="star-half">⭐</span> }
+                  @else { <span class="star-empty">☆</span> }
+                }
+              </div>
+              <span class="reviews-count">({{ product.reviews }} Customer Reviews)</span>
+            </div>
+            <span class="stock-status">In Stock</span>
+          </div>
+
+          <div class="price-section">
+            <span class="detail-price">₹{{ product.price }}</span>
+            @if (product.originalPrice) {
+              <span class="detail-original-price">₹{{ product.originalPrice }}</span>
+              <span class="discount-badge">-{{ getDiscount(product) }}% OFF</span>
+            }
+          </div>
+
+          <p class="product-description">{{ product.description }}</p>
+
+          <div class="purchase-actions">
+            <div class="qty-selector">
+              <button (click)="decrement()" [disabled]="quantity() <= 1">−</button>
+              <span>{{ quantity() }}</span>
+              <button (click)="increment()" [disabled]="quantity() >= 10">+</button>
+            </div>
+            <button class="btn-primary buy-btn" (click)="addToCart()" [class.success]="addedToCart()">
+               {{ addedToCart() ? '✓ Added to Cart' : 'Add into Cart 🛍️' }}
+            </button>
+          </div>
+
+          <div class="product-features">
+            <div class="feature-item">
+              <span class="feature-icon">🚚</span>
+              <div class="feature-text">
+                <strong>Free Delivery</strong>
+                <p>Free shipping on all orders over ₹999</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🛡️</span>
+              <div class="feature-text">
+                <strong>2 Year Warranty</strong>
+                <p>Full protection and support included</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      @if (relatedProducts.length > 0) {
+        <section class="related-section">
+          <h2 class="section-title">Related Products</h2>
+          <div class="product-grid">
+            @for (item of relatedProducts; track item.id) {
+              <div class="product-card" [routerLink]="['/product', item.id]">
+                  <div class="product-image-wrapper">
+                      <img [src]="item.image" class="product-image">
+                  </div>
+                  <div class="product-info">
+                      <h3 class="product-name">{{ item.name }}</h3>
+                      <span class="current-price">₹{{ item.price }}</span>
+                  </div>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    } @else {
+      <div class="error-state">
+        <h2>Product not found</h2>
+        <button class="btn-primary" routerLink="/products">Back to Shop</button>
+      </div>
+    }
+  </div>
+</main>

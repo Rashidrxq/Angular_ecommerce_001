@@ -1,0 +1,87 @@
+<main class="page-wrapper cart-page">
+  <div class="container">
+    <header class="cart-header">
+       <h1 class="page-title">Your <span class="gradient-text">Cart</span></h1>
+       <p class="cart-count-meta">{{ cartService.cartCount() }} items in your selection</p>
+    </header>
+
+    @if (cartService.cartCount() > 0) {
+      <div class="cart-container-grid">
+        <!-- Cart Items List -->
+        <div class="items-column">
+          @for (item of cartService.cartItems(); track item.id) {
+            <div class="cart-item-card">
+              <div class="item-img-box" [routerLink]="['/product', item.id]">
+                <img [src]="item.image" [alt]="item.name">
+              </div>
+              <div class="item-details">
+                <div class="item-header">
+                   <h3 class="item-name" [routerLink]="['/product', item.id]">{{ item.name }}</h3>
+                   <button class="remove-btn" (click)="remove(item.id)" title="Remove item">✕</button>
+                </div>
+                <div class="item-footer">
+                   <div class="qty-controls">
+                      <button (click)="updateQty(item.id, item.quantity - 1)">−</button>
+                      <span class="qty-num">{{ item.quantity }}</span>
+                      <button (click)="updateQty(item.id, item.quantity + 1)">+</button>
+                   </div>
+                   <div class="item-price-box">
+                      <span class="unit-price">₹{{ item.price }}</span>
+                      <span class="total-price">₹{{ item.price * item.quantity }}</span>
+                   </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Summary Sidebar -->
+        <div class="summary-column">
+          <div class="summary-card">
+            <h2 class="summary-title">Order Summary</h2>
+            
+            <div class="summary-details">
+              <div class="summary-row">
+                <span>Subtotal ({{ cartService.cartCount() }} items)</span>
+                <span>₹{{ cartService.cartTotal() }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span class="green-text">FREE</span>
+              </div>
+              <div class="summary-row">
+                <span>Estimated Tax (5%)</span>
+                <span>₹{{ (cartService.cartTotal() * 0.05).toFixed(0) }}</span>
+              </div>
+              <div class="summary-row promo">
+                <span>Promo Code</span>
+                <button class="add-promo">Add Code</button>
+              </div>
+              
+              <div class="summary-divider"></div>
+              
+              <div class="summary-row total">
+                 <span>Total Amount</span>
+                 <span class="total-val">₹{{ (cartService.cartTotal() * 1.05).toFixed(0) }}</span>
+              </div>
+            </div>
+
+            <button class="btn-primary checkout-btn" (click)="checkout()">
+               Secure Checkout 🔒
+            </button>
+            <p class="summary-note">All transactions are secure and encrypted.</p>
+          </div>
+
+          <a routerLink="/products" class="continue-link">← Continue Shopping</a>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-cart-state">
+        <div class="empty-icon">🛒</div>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet. Explore our latest collections and find something you love!</p>
+        <button class="btn-primary" routerLink="/products">Start Shopping</button>
+      </div>
+    }
+  </div>
+</main>

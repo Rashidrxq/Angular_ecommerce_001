@@ -1,0 +1,137 @@
+.products-page {
+  padding-bottom: 100px;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.products-header {
+  padding: 60px 0 40px;
+  background: linear-gradient(180deg, rgba(124, 92, 252, 0.05) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -1.5px;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 18px;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.controls-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.search-box {
+  position: relative;
+  max-width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.5;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 16px 20px 16px 54px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  transition: var(--transition);
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+  background: var(--card);
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.filter-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* No Results State */
+.no-results {
+  text-align: center;
+  padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.no-results-icon {
+  font-size: 64px;
+  margin-bottom: 10px;
+}
+
+.no-results h2 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.no-results p {
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Reusing/Refining Product Grid from home.css */
+/* (Styles are already in styles.css to some extent or inherited if integrated) */
+/* Adding specific overrides here if needed */
+
+@media (min-width: 768px) {
+  .controls-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-box {
+    flex: 1;
+  }
+}

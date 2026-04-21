@@ -1,0 +1,87 @@
+<main class="page-wrapper home-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">New Spring Collection 2026</span>
+      <h1 class="hero-title">Elevate Your <span class="gradient-text">Lifestyle</span> with ShopVibe</h1>
+      <p class="hero-subtitle">Discover a curated collection of premium essentials designed for the modern individual.</p>
+      <div class="hero-actions">
+        <a routerLink="/products" class="btn-primary">Shop Collection 🛍️</a>
+        <a routerLink="/products" class="btn-ghost">View Lookbook</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+       <div class="glass-orb orb-1"></div>
+       <div class="glass-orb orb-2"></div>
+    </div>
+  </section>
+
+  <!-- Categories Quick Links -->
+  <section class="section categories-section">
+    <div class="section-header">
+      <h2 class="section-title">Shop by Category</h2>
+    </div>
+    <div class="category-grid">
+      @for (cat of categories; track cat) {
+        <a [routerLink]="['/products']" [queryParams]="{category: cat}" class="category-card">
+          <span class="cat-icon">{{ getCategoryIcon(cat) }}</span>
+          <span class="cat-name">{{ cat }}</span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="section featured-section">
+    <div class="section-header">
+      <h2 class="section-title">Featured Picks</h2>
+      <a routerLink="/products" class="view-all">View All Products →</a>
+    </div>
+
+    <div class="product-grid">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card">
+          @if (product.badge) {
+            <span [class]="getBadgeClass(product.badge)">{{ product.badge }}</span>
+          }
+          <div class="product-image-wrapper" [routerLink]="['/product', product.id]">
+            <img [src]="product.image" [alt]="product.name" class="product-image">
+            <div class="image-overlay">
+               <span class="overlay-text">View Details</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">{{ product.category }}</p>
+            <h3 class="product-name" [routerLink]="['/product', product.id]">{{ product.name }}</h3>
+            <div class="product-footer">
+              <div class="price-box">
+                <span class="current-price">₹{{ product.price }}</span>
+                @if (product.originalPrice) {
+                  <span class="original-price">₹{{ product.originalPrice }}</span>
+                }
+              </div>
+              <button class="add-to-cart-btn" 
+                      [class.added]="isAdded(product.id)"
+                      (click)="addToCart(product)"
+                      [disabled]="isAdded(product.id)">
+                {{ isAdded(product.id) ? '✓ Added' : '+' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Newsletter / Footer-ish -->
+  <section class="section newsletter-section">
+      <div class="newsletter-card">
+          <h3>Join the Vibe</h3>
+          <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
+          <div class="newsletter-form">
+              <input type="email" placeholder="Enter your email" class="newsletter-input">
+              <button class="btn-primary">Subscribe</button>
+          </div>
+      </div>
+  </section>
+</main>

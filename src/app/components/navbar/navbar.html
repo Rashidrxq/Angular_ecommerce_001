@@ -1,0 +1,54 @@
+<nav class="navbar">
+  <div class="nav-container">
+
+    <!-- Logo -->
+    <a routerLink="/" class="nav-logo" id="nav-logo" (click)="closeMenu()">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">ShopVibe</span>
+    </a>
+
+    <!-- Desktop Links -->
+    <div class="nav-links">
+      <a routerLink="/"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         id="nav-home"
+         class="nav-link">Home</a>
+      <a routerLink="/products"
+         routerLinkActive="active"
+         id="nav-products"
+         class="nav-link">Products</a>
+    </div>
+
+    <!-- Cart + Hamburger -->
+    <div class="nav-right">
+      <a routerLink="/cart" class="cart-btn" id="nav-cart">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-text">Cart</span>
+        @if (cartService.cartCount() > 0) {
+          <span class="cart-badge">{{ cartService.cartCount() }}</span>
+        }
+      </a>
+      <button class="hamburger" (click)="toggleMenu()" id="nav-hamburger"
+              [class.open]="menuOpen" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (menuOpen) {
+    <div class="mobile-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+         class="mobile-link" (click)="closeMenu()">🏠 Home</a>
+      <a routerLink="/products" routerLinkActive="active"
+         class="mobile-link" (click)="closeMenu()">🛍️ Products</a>
+      <a routerLink="/cart" class="mobile-link" (click)="closeMenu()">
+        🛒 Cart
+        @if (cartService.cartCount() > 0) {
+          <span class="cart-badge-mobile">{{ cartService.cartCount() }}</span>
+        }
+      </a>
+    </div>
+  }
+</nav>

@@ -1,0 +1,78 @@
+<main class="page-wrapper products-page">
+  <header class="products-header">
+    <div class="container">
+      <h1 class="page-title">All <span class="gradient-text">Products</span></h1>
+      <p class="page-subtitle">Shop our entire collection of high-quality electronics, apparel, and gadgets.</p>
+      
+      <!-- Filters and Search -->
+      <div class="controls-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" 
+                 placeholder="Search products..." 
+                 (input)="onSearch($event)"
+                 [value]="searchQuery()">
+        </div>
+        
+        <div class="category-filters">
+          @for (cat of categories; track cat) {
+            <button class="filter-btn" 
+                    [class.active]="selectedCategory() === cat"
+                    (click)="selectCategory(cat)">
+              {{ cat }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      @if (filteredProducts().length > 0) {
+        <div class="product-grid">
+          @for (product of filteredProducts(); track product.id) {
+            <div class="product-card">
+              @if (product.badge) {
+                <span [class]="getBadgeClass(product.badge)">{{ product.badge }}</span>
+              }
+              <div class="product-image-wrapper" [routerLink]="['/product', product.id]">
+                <img [src]="product.image" [alt]="product.name" class="product-image">
+                <div class="image-overlay">
+                  <span class="overlay-text">Quick View</span>
+                </div>
+              </div>
+              <div class="product-info">
+                <p class="product-category">{{ product.category }}</p>
+                <h3 class="product-name" [routerLink]="['/product', product.id]">{{ product.name }}</h3>
+                <div class="product-footer">
+                  <div class="price-box">
+                    <span class="current-price">₹{{ product.price }}</span>
+                    @if (product.originalPrice) {
+                      <span class="original-price">₹{{ product.originalPrice }}</span>
+                    }
+                  </div>
+                  <button class="add-to-cart-btn" 
+                          [class.added]="isAdded(product.id)"
+                          (click)="addToCart(product)"
+                          [disabled]="isAdded(product.id)">
+                    {{ isAdded(product.id) ? '✓' : '+' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="no-results">
+          <div class="no-results-icon">🔎</div>
+          <h2>No products found</h2>
+          <p>We couldn't find anything matching "{{ searchQuery() }}" in {{ selectedCategory() }}.</p>
+          <button class="btn-ghost" (click)="selectedCategory.set('All'); searchQuery.set('')">
+            Clear Filters
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+</main>
